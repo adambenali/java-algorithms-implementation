@@ -3,7 +3,6 @@ package com.jwetherell;
 import com.jwetherell.algorithms.data_structures.test.BinaryHeapTests;
 import com.jwetherell.algorithms.data_structures.test.BinarySearchTreeTests;
 import com.jwetherell.algorithms.data_structures.test.MatrixTests;
-import com.jwetherell.algorithms.graph.Dijkstra;
 import com.jwetherell.algorithms.graph.test.Graphs;
 import org.junit.runner.JUnitCore;
 import com.jwetherell.algorithms.InstrumentationCounter;
