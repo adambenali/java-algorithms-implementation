@@ -1,7 +1,9 @@
 package com.jwetherell;
 
+import com.jwetherell.algorithms.data_structures.test.BinaryHeapTests;
 import com.jwetherell.algorithms.data_structures.test.BinarySearchTreeTests;
 import com.jwetherell.algorithms.data_structures.test.MatrixTests;
+import com.jwetherell.algorithms.graph.test.Graphs;
 import org.junit.runner.JUnitCore;
 import com.jwetherell.algorithms.InstrumentationCounter;
 
@@ -10,7 +12,9 @@ public class CoverageAnalyzer {
         // Add all files with instrumentation inside here
         JUnitCore.runClasses(
                 MatrixTests.class,
-                BinarySearchTreeTests.class
+                BinarySearchTreeTests.class,
+                Graphs.class,
+                BinaryHeapTests.class
                 );
 
         for (int i = 0; i < 10; i++) {
@@ -27,7 +31,7 @@ public class CoverageAnalyzer {
                 System.out.printf(
                         "Function with index %d has coverage percentage %f\n",
                         i,
-                        (float) hitCount / (float) pointCount);
+                        100.0 * (float) hitCount / (float) pointCount);
             } else {
                 System.out.println("No instrumentation for function with index " + i);
             }
