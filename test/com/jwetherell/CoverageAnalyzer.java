@@ -1,5 +1,6 @@
 package com.jwetherell;
 
+import com.jwetherell.algorithms.data_structures.test.BinaryHeapTests;
 import com.jwetherell.algorithms.data_structures.test.BinarySearchTreeTests;
 import com.jwetherell.algorithms.data_structures.test.MatrixTests;
 import com.jwetherell.algorithms.graph.Dijkstra;
@@ -13,7 +14,8 @@ public class CoverageAnalyzer {
         JUnitCore.runClasses(
                 MatrixTests.class,
                 BinarySearchTreeTests.class,
-                Graphs.class
+                Graphs.class,
+                BinaryHeapTests.class
                 );
 
         for (int i = 0; i < 10; i++) {
