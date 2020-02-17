@@ -8,7 +8,7 @@ public class InstrumentationCounter {
     // add number of instrumentation points infunction in array below
     // at entry corresponding to function index
 
-    public static int[] pointCounts = new int[] {11,0,0,22,0,0,0,0,0,0};
+    public static int[] pointCounts = new int[] {11,0,0,22,0,0,7,0,0,0};
 
     /*
     Example use:
