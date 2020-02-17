@@ -30,7 +30,7 @@ public class CoverageAnalyzer {
                 System.out.printf(
                         "Function with index %d has coverage percentage %f\n",
                         i,
-                        (float) hitCount / (float) pointCount);
+                        100.0 * (float) hitCount / (float) pointCount);
             } else {
                 System.out.println("No instrumentation for function with index " + i);
             }
