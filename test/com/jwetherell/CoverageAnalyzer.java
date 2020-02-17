@@ -3,6 +3,7 @@ package com.jwetherell;
 import com.jwetherell.algorithms.data_structures.test.BinarySearchTreeTests;
 import com.jwetherell.algorithms.data_structures.test.KdTreeTests;
 import com.jwetherell.algorithms.data_structures.test.MatrixTests;
+import com.jwetherell.algorithms.data_structures.test.SuffixTreeTests;
 import org.junit.runner.JUnitCore;
 import com.jwetherell.algorithms.InstrumentationCounter;
 
@@ -12,7 +13,8 @@ public class CoverageAnalyzer {
         JUnitCore.runClasses(
                 MatrixTests.class,
                 BinarySearchTreeTests.class,
-                KdTreeTests.class
+                KdTreeTests.class,
+                SuffixTreeTests.class
                 );
 
         for (int i = 0; i < 10; i++) {
