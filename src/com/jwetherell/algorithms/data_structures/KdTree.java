@@ -1,5 +1,7 @@
 package com.jwetherell.algorithms.data_structures;
 
+import com.jwetherell.algorithms.InstrumentationCounter;
+
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
@@ -389,17 +391,23 @@ public class KdTree<T extends KdTree.XYZPoint> implements Iterable<T> {
         KdNode lastNode = null;
         Double lastDistance = Double.MAX_VALUE;
         if (results.size() > 0) {
+            InstrumentationCounter.pointHits[800]++;
             lastNode = results.last();
             lastDistance = lastNode.id.euclideanDistance(value);
         }
         Double nodeDistance = node.id.euclideanDistance(value);
         if (nodeDistance.compareTo(lastDistance) < 0) {
-            if (results.size() == K && lastNode != null)
+            InstrumentationCounter.pointHits[801]++;
+            if (results.size() == K && lastNode != null) {
+                InstrumentationCounter.pointHits[802]++;
                 results.remove(lastNode);
+            }
             results.add(node);
         } else if (nodeDistance.equals(lastDistance)) {
+            InstrumentationCounter.pointHits[803]++;
             results.add(node);
         } else if (results.size() < K) {
+            InstrumentationCounter.pointHits[804]++;
             results.add(node);
         }
         lastNode = results.last();
@@ -412,46 +420,58 @@ public class KdTree<T extends KdTree.XYZPoint> implements Iterable<T> {
         // Search children branches, if axis aligned distance is less than
         // current distance
         if (lesser != null && !examined.contains(lesser)) {
+            InstrumentationCounter.pointHits[805]++;
             examined.add(lesser);
 
             double nodePoint = Double.MIN_VALUE;
             double valuePlusDistance = Double.MIN_VALUE;
             if (axis == X_AXIS) {
+                InstrumentationCounter.pointHits[806]++;
                 nodePoint = node.id.x;
                 valuePlusDistance = value.x - lastDistance;
             } else if (axis == Y_AXIS) {
+                InstrumentationCounter.pointHits[807]++;
                 nodePoint = node.id.y;
                 valuePlusDistance = value.y - lastDistance;
             } else {
+                InstrumentationCounter.pointHits[808]++;
                 nodePoint = node.id.z;
                 valuePlusDistance = value.z - lastDistance;
             }
             boolean lineIntersectsCube = ((valuePlusDistance <= nodePoint) ? true : false);
 
             // Continue down lesser branch
-            if (lineIntersectsCube)
+            if (lineIntersectsCube) {
+                InstrumentationCounter.pointHits[809]++;
                 searchNode(value, lesser, K, results, examined);
+            }
         }
         if (greater != null && !examined.contains(greater)) {
+            InstrumentationCounter.pointHits[810]++;
             examined.add(greater);
 
             double nodePoint = Double.MIN_VALUE;
             double valuePlusDistance = Double.MIN_VALUE;
             if (axis == X_AXIS) {
+                InstrumentationCounter.pointHits[811]++;
                 nodePoint = node.id.x;
                 valuePlusDistance = value.x + lastDistance;
             } else if (axis == Y_AXIS) {
+                InstrumentationCounter.pointHits[812]++;
                 nodePoint = node.id.y;
                 valuePlusDistance = value.y + lastDistance;
             } else {
+                InstrumentationCounter.pointHits[813]++;
                 nodePoint = node.id.z;
                 valuePlusDistance = value.z + lastDistance;
             }
             boolean lineIntersectsCube = ((valuePlusDistance >= nodePoint) ? true : false);
 
             // Continue down greater branch
-            if (lineIntersectsCube)
+            if (lineIntersectsCube) {
+                InstrumentationCounter.pointHits[814]++;
                 searchNode(value, greater, K, results, examined);
+            }
         }
     }
 

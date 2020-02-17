@@ -1,6 +1,7 @@
 package com.jwetherell;
 
 import com.jwetherell.algorithms.data_structures.test.BinarySearchTreeTests;
+import com.jwetherell.algorithms.data_structures.test.KdTreeTests;
 import com.jwetherell.algorithms.data_structures.test.MatrixTests;
 import org.junit.runner.JUnitCore;
 import com.jwetherell.algorithms.InstrumentationCounter;
@@ -10,7 +11,8 @@ public class CoverageAnalyzer {
         // Add all files with instrumentation inside here
         JUnitCore.runClasses(
                 MatrixTests.class,
-                BinarySearchTreeTests.class
+                BinarySearchTreeTests.class,
+                KdTreeTests.class
                 );
 
         for (int i = 0; i < 10; i++) {
