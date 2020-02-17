@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 
+import com.jwetherell.algorithms.InstrumentationCounter;
 import com.jwetherell.algorithms.data_structures.interfaces.IHeap;
 
 /**
@@ -299,25 +300,33 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             int rightIndex = getRightIndex(index);
 
             // We shouldn't ever have a right node without a left in a heap
-            if (rightIndex != Integer.MIN_VALUE && leftIndex == Integer.MIN_VALUE) return false;
+            if (rightIndex != Integer.MIN_VALUE && leftIndex == Integer.MIN_VALUE) {
+                InstrumentationCounter.pointHits[400]++;
+                return false;
+            }
 
             if (leftIndex != Integer.MIN_VALUE && leftIndex < size) {
                 T left = this.array[leftIndex];
                 if ((type == Type.MIN && value.compareTo(left) < 0) 
                     || (type == Type.MAX && value.compareTo(left) > 0)) {
+                    InstrumentationCounter.pointHits[401]++;
                     return validateNode(leftIndex);
                 }
+                InstrumentationCounter.pointHits[402]++;
                 return false;
             }
             if (rightIndex != Integer.MIN_VALUE && rightIndex < size) {
                 T right = this.array[rightIndex];
                 if ((type == Type.MIN && value.compareTo(right) < 0)
                     || (type == Type.MAX && value.compareTo(right) > 0)) {
+                    InstrumentationCounter.pointHits[403]++;
                     return validateNode(rightIndex);
                 }
+                InstrumentationCounter.pointHits[404]++;
                 return false;
             }
 
+            InstrumentationCounter.pointHits[405]++;
             return true;
         }
 
@@ -826,24 +835,31 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             Node<T> right = node.right;
 
             // We shouldn't ever have a right node without a left in a heap
-            if (right != null && left == null)
+            if (right != null && left == null) {
+                InstrumentationCounter.pointHits[500]++;
                 return false;
+            }
 
             if (left != null) {
                 if ((type == Type.MIN && node.value.compareTo(left.value) < 0)
                         || (type == Type.MAX && node.value.compareTo(left.value) > 0)) {
+                    InstrumentationCounter.pointHits[501]++;
                     return validateNode(left);
                 }
+                InstrumentationCounter.pointHits[502]++;
                 return false;
             }
             if (right != null) {
                 if ((type == Type.MIN && node.value.compareTo(right.value) < 0)
                         || (type == Type.MAX && node.value.compareTo(right.value) > 0)) {
+                    InstrumentationCounter.pointHits[503]++;
                     return validateNode(right);
                 }
+                InstrumentationCounter.pointHits[504]++;
                 return false;
             }
 
+            InstrumentationCounter.pointHits[505]++;
             return true;
         }
 

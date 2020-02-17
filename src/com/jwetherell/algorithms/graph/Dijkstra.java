@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+import com.jwetherell.algorithms.InstrumentationCounter;
 import com.jwetherell.algorithms.data_structures.Graph;
 
 /**
@@ -58,24 +59,36 @@ public class Dijkstra {
                                                               Graph.Vertex<Integer> start, Graph.Vertex<Integer> end,
                                                               Map<Graph.Vertex<Integer>, List<Graph.Edge<Integer>>> paths,
                                                               Map<Graph.Vertex<Integer>, Graph.CostVertexPair<Integer>> costs) {
-        if (graph == null)
+        if (graph == null) {
+            InstrumentationCounter.pointHits[700]++;
             throw (new NullPointerException("Graph must be non-NULL."));
-        if (start == null)
+        }
+        if (start == null) {
+            InstrumentationCounter.pointHits[701]++;
             throw (new NullPointerException("start must be non-NULL."));
+        }
 
         // Dijkstra's algorithm only works on positive cost graphs
         boolean hasNegativeEdge = checkForNegativeEdges(graph.getVertices());
-        if (hasNegativeEdge)
+        if (hasNegativeEdge) {
+            InstrumentationCounter.pointHits[702]++;
             throw (new IllegalArgumentException("Negative cost Edges are not allowed."));
-
-        for (Graph.Vertex<Integer> v : graph.getVertices())
-            paths.put(v, new ArrayList<Graph.Edge<Integer>>());
+        }
 
         for (Graph.Vertex<Integer> v : graph.getVertices()) {
-            if (v.equals(start))
+            paths.put(v, new ArrayList<Graph.Edge<Integer>>());
+            InstrumentationCounter.pointHits[703]++;
+        }
+
+        for (Graph.Vertex<Integer> v : graph.getVertices()) {
+            if (v.equals(start)) {
+                InstrumentationCounter.pointHits[704]++;
                 costs.put(v, new Graph.CostVertexPair<Integer>(0, v));
-            else
+            } else {
+                InstrumentationCounter.pointHits[705]++;
                 costs.put(v, new Graph.CostVertexPair<Integer>(Integer.MAX_VALUE, v));
+            }
+            InstrumentationCounter.pointHits[706]++;
         }
 
         final Queue<Graph.CostVertexPair<Integer>> unvisited = new PriorityQueue<Graph.CostVertexPair<Integer>>();
@@ -102,6 +115,7 @@ public class Dijkstra {
                     List<Graph.Edge<Integer>> set = paths.get(e.getToVertex()); // O(log n)
                     set.addAll(paths.get(e.getFromVertex())); // O(log n)
                     set.add(e);
+                    InstrumentationCounter.pointHits[707]++;
                 } else if (cost < toPair.getCost()) {
                     // Found a shorter path to a reachable vertex
 
@@ -115,21 +129,27 @@ public class Dijkstra {
                     set.clear();
                     set.addAll(paths.get(e.getFromVertex())); // O(log n)
                     set.add(e);
+                    InstrumentationCounter.pointHits[708]++;
                 }
+                InstrumentationCounter.pointHits[709]++;
             }
 
             // Termination conditions
             if (end != null && vertex.equals(end)) {
                 // We are looking for shortest path to a specific vertex, we found it.
+                InstrumentationCounter.pointHits[710]++;
                 break;
             }
+            InstrumentationCounter.pointHits[711]++;
         }
 
         if (end != null) {
             final Graph.CostVertexPair<Integer> pair = costs.get(end);
             final List<Graph.Edge<Integer>> set = paths.get(end);
+            InstrumentationCounter.pointHits[712]++;
             return (new Graph.CostPathPair<Integer>(pair.getCost(), set));
         }
+        InstrumentationCounter.pointHits[713]++;
         return null;
     }
 

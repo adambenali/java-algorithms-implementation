@@ -33,27 +33,34 @@ public class Matrix<T extends Number> {
                 BigDecimal c1 = (BigDecimal)o1;
                 BigDecimal c2 = (BigDecimal)o2;
                 result = c1.compareTo(c2);
+                InstrumentationCounter.pointHits[600]++;
             } else if (o1 instanceof BigInteger || o2 instanceof BigInteger) {
                 BigInteger c1 = (BigInteger)o1;
                 BigInteger c2 = (BigInteger)o2;
                 result = c1.compareTo(c2);
+                InstrumentationCounter.pointHits[601]++;
             } else if (o1 instanceof Long || o2 instanceof Long) {
                 Long c1 = o1.longValue();
                 Long c2 = o2.longValue();
                 result = c1.compareTo(c2);
+                InstrumentationCounter.pointHits[602]++;
             } else if (o1 instanceof Double || o2 instanceof Double) {
                 Double c1 = o1.doubleValue();
                 Double c2 = o2.doubleValue();
                 result = c1.compareTo(c2);
+                InstrumentationCounter.pointHits[603]++;
             } else if (o1 instanceof Float || o2 instanceof Float) {
                 Float c1 = o1.floatValue();
                 Float c2 = o2.floatValue();
                 result = c1.compareTo(c2);
+                InstrumentationCounter.pointHits[604]++;
             } else {
                 Integer c1 = o1.intValue();
                 Integer c2 = o2.intValue();
                 result = c1.compareTo(c2);
+                InstrumentationCounter.pointHits[605]++;
             }
+            InstrumentationCounter.pointHits[606]++;
             return result;
         }
     };
