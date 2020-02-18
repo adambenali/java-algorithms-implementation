@@ -111,8 +111,12 @@ public class MatrixTests {
         assertArrayEquals(expectedResult.getRow(1), matrix.getRow(1));
     }
 
+    /**
+     * Test equals() method of Matrix class.
+     * Test formal properties like shape and content.
+     */
     @Test
-    public void testMatrixEquals() {
+    public void testMatrixEqualsFormal() {
         Matrix<Integer> matrix1 = new Matrix<Integer>(4, 3);
 
         // return false if obj provided is null
@@ -129,5 +133,44 @@ public class MatrixTests {
         // # of cols don't match
         Matrix<Integer> matrix3 = new Matrix<Integer>(4, 4);
         assertFalse(matrix1.equals(matrix3));
+    }
+
+    /**
+     * Test equals() method of Matrix class.
+     * Test the content of the matrix.
+     */
+    @Test
+    public void testMatrixEqualsContent() {
+
+        Matrix<Integer> matrix1 = new Matrix<Integer>(2, 2);
+        matrix1.set(0, 0, 0);
+        matrix1.set(0, 1, 0);
+        matrix1.set(1, 0, 0);
+        matrix1.set(1, 1, 0);
+
+        Matrix<Integer> matrix2 = new Matrix<Integer>(2, 2);
+        matrix2.set(0, 0, 0);
+        matrix2.set(0, 1, 0);
+        matrix2.set(1, 0, 0);
+        matrix2.set(1, 1, 0);
+
+        // return true if equal
+        assertTrue(matrix1.equals(matrix2));
+
+        // return false if one cell is different
+        matrix2.set(0, 0, 1);
+        assertFalse(matrix1.equals(matrix2));
+
+        // in different positions
+        matrix2.set(0, 0, 0);
+        matrix2.set(0, 1, 1);
+        assertFalse(matrix1.equals(matrix2));
+        matrix2.set(0, 1, 0);
+        matrix2.set(1, 0, 1);
+        assertFalse(matrix1.equals(matrix2));
+        matrix2.set(1, 1, 0);
+        matrix2.set(1, 1, 1);
+        assertFalse(matrix1.equals(matrix2));
+
     }
 }
