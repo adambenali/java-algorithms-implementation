@@ -1,11 +1,10 @@
 package com.jwetherell.algorithms.data_structures.test;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertArrayEquals;
 import org.junit.Test;
 
 import com.jwetherell.algorithms.data_structures.Matrix;
+
+import static org.junit.Assert.*;
 
 public class MatrixTests {
 
@@ -110,5 +109,25 @@ public class MatrixTests {
         
         assertArrayEquals(expectedResult.getRow(0), matrix.getRow(0));
         assertArrayEquals(expectedResult.getRow(1), matrix.getRow(1));
+    }
+
+    @Test
+    public void testMatrixEquals() {
+        Matrix<Integer> matrix1 = new Matrix<Integer>(4, 3);
+
+        // return false if obj provided is null
+        assertFalse(matrix1.equals(null));
+
+        // String is not an instance of Matrix
+        String string = "I'm a string!";
+        assertFalse(matrix1.equals(string));
+
+        // # of rows don't match
+        Matrix<Integer> matrix2 = new Matrix<Integer>(5, 3);
+        assertFalse(matrix1.equals(matrix2));
+
+        // # of cols don't match
+        Matrix<Integer> matrix3 = new Matrix<Integer>(4, 4);
+        assertFalse(matrix1.equals(matrix3));
     }
 }
