@@ -1,7 +1,6 @@
 package com.jwetherell.algorithms.data_structures.test;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import java.util.Collection;
 
@@ -14,6 +13,43 @@ import com.jwetherell.algorithms.data_structures.test.common.Utils;
 import com.jwetherell.algorithms.data_structures.test.common.Utils.TestData;
 
 public class BinaryHeapTests {
+	
+	/**
+     * Test the validNode function by calling validate function in BinaryHeapArray
+     * The function should return false if the value of child is smaller than its parent in a min-heap or larger than its parent in a max-heap
+     */
+    @Test
+    public void invalidNodeInArray() {
+
+        BinaryHeap.BinaryHeapArray<Integer> minHeap = new BinaryHeap.BinaryHeapArray<Integer>(BinaryHeap.Type.MIN);
+        minHeap.add(1);
+        minHeap.add(2);
+        minHeap.add(3);
+        minHeap.add(4);
+        minHeap.add(5);
+        minHeap.add(6);
+        assertTrue(minHeap.validate());
+        minHeap.setValue(5, 0); // right child is invalid
+        assertFalse(minHeap.validate());
+        minHeap.setValue(2, 0); // right child is invalid
+        assertFalse(minHeap.validate());
+        minHeap.setValue(3, 0); // left child is invalid
+        assertFalse(minHeap.validate());
+        
+        maxHeap.add(1);
+        maxHeap.add(2);
+        maxHeap.add(3);
+        maxHeap.add(4);
+        maxHeap.add(5);
+        maxHeap.add(6);
+        assertTrue(maxHeap.validate());
+        maxHeap.setValue(5, 10); // right child is invalid
+        assertFalse(maxHeap.validate());
+        maxHeap.setValue(2, 12); // right child is invalid
+        assertFalse(maxHeap.validate());
+        maxHeap.setValue(1, 15); // left child is invalid
+        assertFalse(maxHeap.validate());
+    }
 
     @Test
     public void testMinHeap() {

@@ -310,24 +310,30 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
                 if ((type == Type.MIN && value.compareTo(left) < 0) 
                     || (type == Type.MAX && value.compareTo(left) > 0)) {
                     InstrumentationCounter.pointHits[401]++;
-                    return validateNode(leftIndex);
-                }
-                InstrumentationCounter.pointHits[402]++;
-                return false;
+                    if (!validateNode(leftIndex)) {
+                        InstrumentationCounter.pointHits[402]++;
+                        return false;
+                    }
+                } else return false;
             }
             if (rightIndex != Integer.MIN_VALUE && rightIndex < size) {
                 T right = this.array[rightIndex];
                 if ((type == Type.MIN && value.compareTo(right) < 0)
                     || (type == Type.MAX && value.compareTo(right) > 0)) {
                     InstrumentationCounter.pointHits[403]++;
-                    return validateNode(rightIndex);
-                }
-                InstrumentationCounter.pointHits[404]++;
-                return false;
+                    if (!validateNode(rightIndex)) {
+                        InstrumentationCounter.pointHits[404]++;
+                        return false;
+                    }
+                } else return false;
             }
 
             InstrumentationCounter.pointHits[405]++;
             return true;
+        }
+        
+        public void setValue(int index, T value) {
+            this.array[index] = value;
         }
 
         /**
