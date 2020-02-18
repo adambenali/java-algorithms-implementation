@@ -850,25 +850,38 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
                 if ((type == Type.MIN && node.value.compareTo(left.value) < 0)
                         || (type == Type.MAX && node.value.compareTo(left.value) > 0)) {
                     InstrumentationCounter.pointHits[501]++;
-                    return validateNode(left);
-                }
-                InstrumentationCounter.pointHits[502]++;
-                return false;
+                    if (!validateNode(left)) {
+                        InstrumentationCounter.pointHits[502]++;
+                        return false;
+                    }
+                } else return false;
             }
             if (right != null) {
                 if ((type == Type.MIN && node.value.compareTo(right.value) < 0)
                         || (type == Type.MAX && node.value.compareTo(right.value) > 0)) {
                     InstrumentationCounter.pointHits[503]++;
-                    return validateNode(right);
-                }
-                InstrumentationCounter.pointHits[504]++;
-                return false;
+                    if (!validateNode(right)) {
+                        InstrumentationCounter.pointHits[504]++;
+                        return false;
+                    }
+                } else return false;
             }
 
             InstrumentationCounter.pointHits[505]++;
             return true;
         }
-
+        
+        public void setValue(T origin, T value) {
+            Node<T> node = getNode(root, origin);
+            if (value != null) {
+                node.value = value;
+                return;
+            }
+            if (node.parent.left.equals(node)) {
+                node.parent.left = null;
+            } else node.parent.right = null;
+        }
+        
         /**
          * Populate the node in the array at the index.
          * 
