@@ -254,6 +254,10 @@ public class MathematicsTest {
         assertTrue("isPrime error. isPrime=" + isPrime, isPrime);
     }
 
+    /**
+     * Test all if-statements of the isPrime() method.
+     * Test numbers that should get through all the if-statements before it.
+     */
     @Test
     public void isPrimeTest() {
 
