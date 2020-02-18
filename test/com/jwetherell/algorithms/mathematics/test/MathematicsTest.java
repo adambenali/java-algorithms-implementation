@@ -361,6 +361,10 @@ public class MathematicsTest {
 
         for (int composite : compositeNumbers)
             assertFalse("Miller-Rabin test error. " + composite, Primes.millerRabinTest(composite));
+
+        // covers first if-statement
+        assertFalse(Primes.millerRabinTest(0));
+        assertFalse(Primes.millerRabinTest(1));
     }
 }
 
