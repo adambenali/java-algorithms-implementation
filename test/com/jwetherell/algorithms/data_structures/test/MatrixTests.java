@@ -1,13 +1,34 @@
 package com.jwetherell.algorithms.data_structures.test;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertArrayEquals;
 import org.junit.Test;
 
 import com.jwetherell.algorithms.data_structures.Matrix;
 
+import static org.junit.Assert.*;
+
 public class MatrixTests {
+
+    /**
+     * Trying to add two matrices of different
+     * dimensions should return an empty (null-filled)
+     * matrix with dimensions equal to the matrix whose
+     * add method was called.
+     */
+    @Test
+    public void testAddBadDimensions() {
+        Matrix<Double> m1 = new Matrix<>(2, 1);
+        Matrix<Double> m2 = new Matrix<>(1, 2);
+        m1.set(0,0, 1.0);
+        m1.set(1,0, 1.0);
+        m2.set(0,0, 1.0);
+        m2.set(0,1, 1.0);
+
+        Matrix<Double> res = m1.add(m2);
+        assertEquals(res.getCols(), m1.getCols());
+        assertEquals(res.getRows(), m1.getRows());
+        assertNull(res.get(0, 0));
+        assertNull(res.get(1, 0));
+    }
 
     @Test
     public void testMatrix() {
