@@ -3,7 +3,9 @@ package com.jwetherell;
 import com.jwetherell.algorithms.data_structures.test.FenwickTreeTests;
 import com.jwetherell.algorithms.data_structures.test.BinaryHeapTests;
 import com.jwetherell.algorithms.data_structures.test.BinarySearchTreeTests;
+import com.jwetherell.algorithms.data_structures.test.KdTreeTests;
 import com.jwetherell.algorithms.data_structures.test.MatrixTests;
+import com.jwetherell.algorithms.data_structures.test.SuffixTreeTests;
 import com.jwetherell.algorithms.graph.test.Graphs;
 import org.junit.runner.JUnitCore;
 import com.jwetherell.algorithms.InstrumentationCounter;
@@ -13,8 +15,10 @@ public class CoverageAnalyzer {
         // Add all files with instrumentation inside here
         JUnitCore.runClasses(
                 MatrixTests.class,
-                FenwickTreeTests.class,
                 BinarySearchTreeTests.class,
+                KdTreeTests.class,
+                SuffixTreeTests.class,
+                FenwickTreeTests.class,
                 Graphs.class,
                 BinaryHeapTests.class
                 );
