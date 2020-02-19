@@ -134,22 +134,7 @@ public class MatrixTests {
         matrix2.set(1, 1, new BigDecimal("2.0"));
 
         assertTrue(matrix1.equals(matrix2));
-
-        // Testing BigInteger branch
-        Matrix<BigInteger> matrix3 = new Matrix<BigInteger>(2, 2);
-        matrix3.set(0, 0, new BigInteger("4"));
-        matrix3.set(0, 1, new BigInteger("9"));
-        matrix3.set(1, 0, new BigInteger("3"));
-        matrix3.set(1, 1, new BigInteger("2"));
-
-        Matrix<BigInteger> matrix4 = new Matrix<BigInteger>(2, 2);
-        matrix4.set(0, 0, new BigInteger("4"));
-        matrix4.set(0, 1, new BigInteger("9"));
-        matrix4.set(1, 0, new BigInteger("3"));
-        matrix4.set(1, 1, new BigInteger("2"));
-
-        assertTrue(matrix3.equals(matrix4));
-
+        
     }
 
     /**
