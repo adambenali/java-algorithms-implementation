@@ -19,7 +19,7 @@ public class BinaryHeapTests {
      * The function should return false if the value of child is smaller than its parent in a min-heap or larger than its parent in a max-heap
      */
     @Test
-    public void invalidNodeInArray() {
+    public void minHeapArray() {
 
         BinaryHeap.BinaryHeapArray<Integer> minHeap = new BinaryHeap.BinaryHeapArray<Integer>(BinaryHeap.Type.MIN);
         minHeap.add(1);
@@ -35,7 +35,14 @@ public class BinaryHeapTests {
         assertFalse(minHeap.validate());
         minHeap.setValue(3, 0); // left child is invalid
         assertFalse(minHeap.validate());
-        
+    }
+    
+    /**
+     * Test the validNode function by calling validate function in BinaryHeapTree
+     * The function should return false if the value of child is larger than its parent in a max-heap
+     */
+    @Test
+    public void maxHeapArray() {
         BinaryHeap.BinaryHeapArray<Integer> maxHeap = new BinaryHeap.BinaryHeapArray<Integer>(BinaryHeap.Type.MAX);
         maxHeap.add(1);
         maxHeap.add(2);
@@ -54,10 +61,10 @@ public class BinaryHeapTests {
     
     /**
      * Test the validNode function by calling validate function in BinaryHeapTree
-     * The function should return false if the value of child is smaller than its parent in a min-heap or larger than its parent in a max-heap
+     * The function should return false if the value of child is smaller than its parent in a min-heap 
      */
     @Test
-    public void invalidNodeInTree() {
+    public void minHeapTree() {
 
         BinaryHeap.BinaryHeapTree<Integer> minHeap = new BinaryHeap.BinaryHeapTree<Integer>(BinaryHeap.Type.MIN);
         minHeap.add(1);
@@ -76,7 +83,14 @@ public class BinaryHeapTests {
         assertFalse(minHeap.validate());
         minHeap.setValue(4, 0); // left child is invalid
         assertFalse(minHeap.validate());
-        
+    }
+    
+    /**
+     * Test the validNode function by calling validate function in BinaryHeapTree
+     * The function should return false if the value of child is larger than its parent in a max-heap
+     */
+    @Test
+    public void maxHeapTree() {
         BinaryHeap.BinaryHeapTree<Integer> maxHeap = new BinaryHeap.BinaryHeapTree<Integer>(BinaryHeap.Type.MAX);
         maxHeap.add(1);
         maxHeap.add(2);
