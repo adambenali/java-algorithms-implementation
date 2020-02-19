@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import com.jwetherell.algorithms.data_structures.Matrix;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import static org.junit.Assert.*;
@@ -47,6 +48,40 @@ public class MatrixTests {
         Matrix<BigInteger> res = m1.add(m2);
         assertEquals(BigInteger.valueOf(10), res.get(0,0));
         assertEquals(BigInteger.valueOf(7), res.get(1,0));
+    }
+
+    /**
+     * Test matrix addition of BigDecimal objects
+     */
+    @Test
+    public void testAddBigDecimal() {
+        Matrix<BigDecimal> m1 = new Matrix<>(2, 1);
+        Matrix<BigDecimal> m2 = new Matrix<>(2, 1);
+        m1.set(0,0, BigDecimal.valueOf(8.2));
+        m2.set(0,0, BigDecimal.valueOf(2.3));
+        m1.set(1,0, BigDecimal.valueOf(4.8));
+        m2.set(1,0, BigDecimal.valueOf(3.1));
+
+        Matrix<BigDecimal> res = m1.add(m2);
+        assertEquals(BigDecimal.valueOf(10.5), res.get(0,0));
+        assertEquals(BigDecimal.valueOf(7.9), res.get(1,0));
+    }
+
+    /**
+     * Test matrix addition of Long objects
+     */
+    @Test
+    public void testAddLong() {
+        Matrix<Long> m1 = new Matrix<>(2, 1);
+        Matrix<Long> m2 = new Matrix<>(2, 1);
+        m1.set(0,0, 8L);
+        m2.set(0,0, 2L);
+        m1.set(1,0, 4L);
+        m2.set(1,0, 3L);
+
+        Matrix<Long> res = m1.add(m2);
+        assertEquals(10L, res.get(0,0));
+        assertEquals(7L, res.get(1,0));
     }
 
     @Test
