@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 
+import com.jwetherell.algorithms.data_structures.BinaryHeap.Type;
 import com.jwetherell.algorithms.data_structures.interfaces.IHeap;
 
 /**
@@ -200,18 +201,13 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
 
             T nodeToMove = null;
             int nodeToMoveIndex = -1;
-            if ((type == Type.MIN && left != null && right != null && value.compareTo(left) > 0 && value.compareTo(right) > 0)
-                || (type == Type.MAX && left != null && right != null && value.compareTo(left) < 0 && value.compareTo(right) < 0)) {
+            if (compare(value, right) && compare(value, left)) {
                 // Both children are greater/lesser than node
-                if ((right!=null) && 
-                    ((type == Type.MIN && (right.compareTo(left) < 0)) || ((type == Type.MAX && right.compareTo(left) > 0)))
-                ) {
+                if (compare(left, right)) {
                     // Right is greater/lesser than left
                     nodeToMove = right;
                     nodeToMoveIndex = rightIndex;
-                } else if ((left!=null) && 
-                           ((type == Type.MIN && left.compareTo(right) < 0) || (type == Type.MAX && left.compareTo(right) > 0))
-                ) {
+                } else if (compare(right, left)) {
                     // Left is greater/lesser than right
                     nodeToMove = left;
                     nodeToMoveIndex = leftIndex;
@@ -220,15 +216,11 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
                     nodeToMove = right;
                     nodeToMoveIndex = rightIndex;
                 }
-            } else if ((type == Type.MIN && right != null && value.compareTo(right) > 0)
-                       || (type == Type.MAX && right != null && value.compareTo(right) < 0)
-            ) {
+            } else if (compare(value, right)) {
                 // Right is greater/lesser than node
                 nodeToMove = right;
                 nodeToMoveIndex = rightIndex;
-            } else if ((type == Type.MIN && left != null && value.compareTo(left) > 0)
-                       || (type == Type.MAX && left != null && value.compareTo(left) < 0)
-            ) {
+            } else if (compare(value, left)) {
                 // Left is greater/lesser than node
                 nodeToMove = left;
                 nodeToMoveIndex = leftIndex;
@@ -242,6 +234,13 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             this.array[index] = nodeToMove;
 
             heapDown(nodeToMoveIndex);
+        }
+        
+        private boolean compare(T value, T checkValue) {
+            if (checkValue != null && ((type == Type.MIN && value.compareTo(checkValue) > 0)
+            || (type == Type.MAX && value.compareTo(checkValue) < 0)))
+                return true;
+            return false;
         }
 
         // Grow the array by 50%
