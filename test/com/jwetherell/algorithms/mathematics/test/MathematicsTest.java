@@ -254,6 +254,60 @@ public class MathematicsTest {
         assertTrue("isPrime error. isPrime=" + isPrime, isPrime);
     }
 
+    /**
+     * Test all if-statements of the isPrime() method.
+     * Test numbers that should get through all the if-statements before it.
+     */
+    @Test
+    public void isPrimeTest() {
+
+        // covers 1st if-statement
+        long number = 1;
+        assertFalse(Primes.isPrime(number));
+
+        // covers 2nd if-statement
+        number = 2;
+        assertTrue(Primes.isPrime(number));
+        number = 3;
+        assertTrue(Primes.isPrime(number));
+
+        // covers 3rd if-statement
+        number = 4;
+        assertFalse(Primes.isPrime(number));
+        number = 6;
+        assertFalse(Primes.isPrime(number));
+        number = 8;
+        assertFalse(Primes.isPrime(number));
+
+        // covers 4th if-statement
+        number = 5;
+        assertTrue(Primes.isPrime(number));
+        number = 7;
+        assertTrue(Primes.isPrime(number));
+
+        // covers 5th if-statement
+        number = 9;
+        assertFalse(Primes.isPrime(number));
+        number = 12;
+        assertFalse(Primes.isPrime(number));
+        number = 15;
+        assertFalse(Primes.isPrime(number));
+        number = 18;
+        assertFalse(Primes.isPrime(number));
+
+        // covers 6th if-statement
+        number = 25;
+        assertFalse(Primes.isPrime(number));
+
+        // covers 7th if-statement
+        number = 25;
+        assertFalse(Primes.isPrime(number));
+
+        // covers 8th if-statement
+        number = 49;
+        assertFalse(Primes.isPrime(number));
+    }
+
     @Test
     public void sieveOfEratosthenes() {
         int number = 1;
@@ -307,6 +361,10 @@ public class MathematicsTest {
 
         for (int composite : compositeNumbers)
             assertFalse("Miller-Rabin test error. " + composite, Primes.millerRabinTest(composite));
+
+        // covers first if-statement
+        assertFalse(Primes.millerRabinTest(0));
+        assertFalse(Primes.millerRabinTest(1));
     }
 }
 
