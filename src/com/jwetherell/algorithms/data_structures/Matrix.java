@@ -56,6 +56,100 @@ public class Matrix<T extends Number> {
         }
     };
 
+    private enum Operation {
+        ADD,
+        SUB,
+        MULT,
+        ZERO
+    }
+
+    private T compute(T n1, T n2, Operation op) {
+        if (n1 instanceof BigDecimal) {
+            return (T) compute((BigDecimal) n1, (BigDecimal)n2, op);
+        } else if (n1 instanceof BigInteger) {
+            return (T) compute((BigInteger) n1, (BigInteger)n2, op);
+        } else if (n1 instanceof Long || n2 instanceof Long) {
+            return (T) compute((Long) n1, (Long) n2, op);
+        } else if (n1 instanceof Double || n2 instanceof Double) {
+            return (T) compute((Double) n1, (Double) n2, op);
+        } else if (n1 instanceof Float || n2 instanceof Float) {
+            return (T) compute((Float) n1, (Float) n2, op);
+        } else {
+            return (T) compute((Integer) n1, (Integer) n2, op);
+        }
+    }
+
+    private BigInteger compute(BigInteger n1, BigInteger n2, Operation op) {
+        if (op.equals(Operation.ADD)) {
+            return n1.add(n2);
+        } else if (op.equals(Operation.SUB)) {
+            return n1.subtract(n2);
+        } else if (op.equals(Operation.ZERO)) {
+            return BigInteger.ZERO;
+        } else {
+            return n1.multiply(n2);
+        }
+    }
+
+    private BigDecimal compute(BigDecimal n1, BigDecimal n2, Operation op) {
+        if (op.equals(Operation.ADD)) {
+            return n1.add(n2);
+        } else if (op.equals(Operation.SUB)) {
+            return n1.subtract(n2);
+        } else if (op.equals(Operation.ZERO)) {
+            return BigDecimal.ZERO;
+        } else {
+            return n1.multiply(n2);
+        }
+    }
+
+    private Long compute(Long n1, Long n2, Operation op) {
+        if (op.equals(Operation.ADD)) {
+            return n1 + n2;
+        } else if (op.equals(Operation.SUB)) {
+            return n1 - n2;
+        } else if (op.equals(Operation.ZERO)) {
+            return 0L;
+        } else {
+            return n1 * n2;
+        }
+    }
+
+    private Double compute(Double n1, Double n2, Operation op) {
+        if (op.equals(Operation.ADD)) {
+            return n1 + n2;
+        } else if (op.equals(Operation.SUB)) {
+            return n1 - n2;
+        } else if (op.equals(Operation.ZERO)) {
+            return 0D;
+        } else {
+            return n1 * n2;
+        }
+    }
+
+    private Float compute(Float n1, Float n2, Operation op) {
+        if (op.equals(Operation.ADD)) {
+            return n1 + n2;
+        } else if (op.equals(Operation.SUB)) {
+            return n1 - n2;
+        } else if (op.equals(Operation.ZERO)) {
+            return 0F;
+        } else {
+            return n1 * n2;
+        }
+    }
+
+    private Integer compute(Integer n1, Integer n2, Operation op) {
+        if (op.equals(Operation.ADD)) {
+            return n1 + n2;
+        } else if (op.equals(Operation.SUB)) {
+            return n1 - n2;
+        } else if (op.equals(Operation.ZERO)) {
+            return 0;
+        } else {
+            return n1 * n2;
+        }
+    }
     /**
      * Matrix with 'rows' number of rows and 'cols' number of columns.
      *
@@ -165,7 +259,7 @@ public class Matrix<T extends Number> {
                 for (int i = 0; i < cols; i++) {
                     T m1 = this.get(r, c);
                     T m2 = input.get(r, c);
-                    T result = addNumber(m1, m2);
+                    T result = compute(m1, m2, Operation.ADD);
                     output.set(r, c, result);
                 }
             }
@@ -173,30 +267,6 @@ public class Matrix<T extends Number> {
         return output;
     }
 
-    private T addNumber(T m1, T m2) {
-        T result;
-        if (m1 instanceof BigDecimal || m2 instanceof BigDecimal) {
-            BigDecimal result2 = ((BigDecimal)m1).add((BigDecimal)m2);
-            result = (T)result2;
-        } else if (m1 instanceof BigInteger || m2 instanceof BigInteger) {
-            BigInteger result2 = ((BigInteger)m1).add((BigInteger)m2);
-            result = (T)result2;
-        } else if (m1 instanceof Long || m2 instanceof Long) {
-            Long result2 = (m1.longValue() + m2.longValue());
-            result = (T)result2;
-        } else if (m1 instanceof Double || m2 instanceof Double) {
-            Double result2 = (m1.doubleValue() + m2.doubleValue());
-            result = (T)result2;
-        } else if (m1 instanceof Float || m2 instanceof Float) {
-            Float result2 = (m1.floatValue() + m2.floatValue());
-            result = (T)result2;
-        } else {
-            // Integer
-            Integer result2 = (m1.intValue() + m2.intValue());
-            result = (T)result2;
-        }
-        return result;
-    }
 
     public Matrix<T> subtract(Matrix<T> input) {
         Matrix<T> output = new Matrix<T>(this.rows, this.cols);
@@ -208,37 +278,12 @@ public class Matrix<T extends Number> {
                 for (int i = 0; i < cols; i++) {
                     T m1 = this.get(r, c);
                     T m2 = input.get(r, c);
-                    T result = subtractNumber(m1, m2);
+                    T result = compute(m1, m2, Operation.SUB);
                     output.set(r, c, result);
                 }
             }
         }
         return output;
-    }
-
-    private T subtractNumber(T m1, T m2) {
-        T result;
-        if (m1 instanceof BigDecimal || m2 instanceof BigDecimal) {
-            BigDecimal result2 = ((BigDecimal)m1).subtract((BigDecimal)m2);
-            result = (T)result2;
-        } else if (m1 instanceof BigInteger || m2 instanceof BigInteger) {
-            BigInteger result2 = ((BigInteger)m1).subtract((BigInteger)m2);
-            result = (T)result2;
-        } else if (m1 instanceof Long || m2 instanceof Long) {
-            Long result2 = (m1.longValue() - m2.longValue());
-            result = (T)result2;
-        } else if (m1 instanceof Double || m2 instanceof Double) {
-            Double result2 = (m1.doubleValue() - m2.doubleValue());
-            result = (T)result2;
-        } else if (m1 instanceof Float || m2 instanceof Float) {
-            Float result2 = (m1.floatValue() - m2.floatValue());
-            result = (T)result2;
-        } else {
-            // Integer
-            Integer result2 = (m1.intValue() - m2.intValue());
-            result = (T)result2;
-        }
-        return result;
     }
 
     public Matrix<T> multiply(Matrix<T> input) {
@@ -252,68 +297,17 @@ public class Matrix<T extends Number> {
                 T[] column = input.getColumn(c);
                 T test = row[0];
                 /* TODO: This is ugly and how to handle number overflow? */
-                if (test instanceof BigDecimal) {
-                    BigDecimal result = BigDecimal.ZERO;
-                    for (int i = 0; i < cols; i++) {
-                        T m1 = row[i];
-                        T m2 = column[i];
 
-                        BigDecimal result2 = ((BigDecimal)m1).multiply(((BigDecimal)m2));
-                        result = result.add(result2);
-                    }
-                    output.set(r, c, (T)result);
-                } else if (test instanceof BigInteger) {
-                    BigInteger result = BigInteger.ZERO;
-                    for (int i = 0; i < cols; i++) {
-                        T m1 = row[i];
-                        T m2 = column[i];
+                T zero = null;
+                T result = compute(zero, zero, Operation.ZERO);
+                for (int i = 0; i < cols; i++) {
+                    T m1 = row[i];
+                    T m2 = column[i];
 
-                        BigInteger result2 = ((BigInteger)m1).multiply(((BigInteger)m2));
-                        result = result.add(result2);
-                    }
-                    output.set(r, c, (T)result);
-                } else if (test instanceof Long) {
-                    Long result = 0l;
-                    for (int i = 0; i < cols; i++) {
-                        T m1 = row[i];
-                        T m2 = column[i];
-
-                        Long result2 = m1.longValue() * m2.longValue();
-                        result = result+result2;
-                    }
-                    output.set(r, c, (T)result);
-                } else if (test instanceof Double) {
-                    Double result = 0d;
-                    for (int i = 0; i < cols; i++) {
-                        T m1 = row[i];
-                        T m2 = column[i];
-
-                        Double result2 = m1.doubleValue() * m2.doubleValue();
-                        result = result+result2;
-                    }
-                    output.set(r, c, (T)result);
-                } else if (test instanceof Float) {
-                    Float result = 0f;
-                    for (int i = 0; i < cols; i++) {
-                        T m1 = row[i];
-                        T m2 = column[i];
-
-                        Float result2 = m1.floatValue() * m2.floatValue();
-                        result = result+result2;
-                    }
-                    output.set(r, c, (T)result);
-                } else {
-                    // Integer
-                    Integer result = 0;
-                    for (int i = 0; i < cols; i++) {
-                        T m1 = row[i];
-                        T m2 = column[i];
-
-                        Integer result2 = m1.intValue() * m2.intValue();
-                        result = result+result2;
-                    }
-                    output.set(r, c, (T)result);
+                    T result2 = compute(m1, m2, Operation.MULT);
+                    result = compute(result, result2, Operation.ADD);
                 }
+                output.set(r, c, (T)result);
             }
         }
         return output;
