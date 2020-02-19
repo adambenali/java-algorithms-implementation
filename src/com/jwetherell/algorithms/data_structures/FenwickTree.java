@@ -296,35 +296,30 @@ public class FenwickTree<D extends FenwickTree.Data> {
              *            resulted from combination.
              */
             private void combined(RangeSumData<N> data) {
-                if (this.sum == null && data.sum == null)
-                    return;
-                else if (this.sum != null && data.sum == null)
-                    return;
-                else if (this.sum == null && data.sum != null)
+                if (this.sum == null)
                     this.sum = data.sum;
-                else {
-                    /* TODO: This is ugly and how to handle number overflow? */
-                    if (this.sum instanceof BigDecimal || data.sum instanceof BigDecimal) {
-                        BigDecimal result = ((BigDecimal)this.sum).add((BigDecimal)data.sum);
-                        this.sum = (N)result;
-                    } else if (this.sum instanceof BigInteger || data.sum instanceof BigInteger) {
-                        BigInteger result = ((BigInteger)this.sum).add((BigInteger)data.sum);
-                        this.sum = (N)result;
-                    } else if (this.sum instanceof Long || data.sum instanceof Long) {
-                        Long result = (this.sum.longValue() + data.sum.longValue());
-                        this.sum = (N)result;
-                    } else if (this.sum instanceof Double || data.sum instanceof Double) {
-                        Double result = (this.sum.doubleValue() + data.sum.doubleValue());
-                        this.sum = (N)result;
-                    } else if (this.sum instanceof Float || data.sum instanceof Float) {
-                        Float result = (this.sum.floatValue() + data.sum.floatValue());
-                        this.sum = (N)result;
-                    } else {
-                        // Integer
-                        Integer result = (this.sum.intValue() + data.sum.intValue());
-                        this.sum = (N)result;
-                    }
+                else if (data.sum != null) {
+                    this.sum = (N) addNumbers(this.sum, data.sum);
                 }
+            }
+
+            private Number addNumbers(Number u, Number v) {
+                Number result;
+                if (u instanceof BigDecimal || v instanceof BigDecimal) {
+                    result = ((BigDecimal)u).add((BigDecimal)v);
+                } else if (u instanceof BigInteger || v instanceof BigInteger) {
+                    result = ((BigInteger)u).add((BigInteger)v);
+                } else if (u instanceof Long || v instanceof Long) {
+                    result = (u.longValue() + v.longValue());
+                } else if (u instanceof Double || v instanceof Double) {
+                    result = (u.doubleValue() + v.doubleValue());
+                } else if (u instanceof Float || v instanceof Float) {
+                    result = (u.floatValue() + v.floatValue());
+                } else {
+                    // Integer
+                    result = (u.intValue() + v.intValue());
+                }
+                return result;
             }
 
             /**
@@ -334,35 +329,30 @@ public class FenwickTree<D extends FenwickTree.Data> {
              *            resulted from combination.
              */
             private void separate(RangeSumData<N> data) {
-                if (this.sum == null && data.sum == null)
-                    return;
-                else if (this.sum != null && data.sum == null)
-                    return;
-                else if (this.sum == null && data.sum != null)
+                if (this.sum == null)
                     this.sum = data.sum;
-                else {
-                    /* TODO: This is ugly and how to handle number overflow? */
-                    if (this.sum instanceof BigDecimal || data.sum instanceof BigDecimal) {
-                        BigDecimal result = ((BigDecimal)this.sum).subtract((BigDecimal)data.sum);
-                        this.sum = (N)result;
-                    } else if (this.sum instanceof BigInteger || data.sum instanceof BigInteger) {
-                        BigInteger result = ((BigInteger)this.sum).subtract((BigInteger)data.sum);
-                        this.sum = (N)result;
-                    } else if (this.sum instanceof Long || data.sum instanceof Long) {
-                        Long result = (this.sum.longValue() - data.sum.longValue());
-                        this.sum = (N)result;
-                    } else if (this.sum instanceof Double || data.sum instanceof Double) {
-                        Double result = (this.sum.doubleValue() - data.sum.doubleValue());
-                        this.sum = (N)result;
-                    } else if (this.sum instanceof Float || data.sum instanceof Float) {
-                        Float result = (this.sum.floatValue() - data.sum.floatValue());
-                        this.sum = (N)result;
-                    } else {
-                        // Integer
-                        Integer result = (this.sum.intValue() - data.sum.intValue());
-                        this.sum = (N)result;
-                    }
+                else if (data.sum != null){
+                    this.sum = (N) substractNumbers(this.sum, data.sum);
                 }
+            }
+
+            private Number substractNumbers(Number u, Number v) {
+                Number result;
+                if (u instanceof BigDecimal || v instanceof BigDecimal) {
+                    result = ((BigDecimal)u).subtract((BigDecimal)v);
+                } else if (u instanceof BigInteger || v instanceof BigInteger) {
+                    result = ((BigInteger)u).subtract((BigInteger)v);
+                } else if (u instanceof Long || v instanceof Long) {
+                    result = (u.longValue() - v.longValue());
+                } else if (u instanceof Double || v instanceof Double) {
+                    result = (u.doubleValue() - v.doubleValue());
+                } else if (u instanceof Float || v instanceof Float) {
+                    result = (u.floatValue() - v.floatValue());
+                } else {
+                    // Integer
+                    result = (u.intValue() - v.intValue());
+                }
+                return result;
             }
 
             /**
