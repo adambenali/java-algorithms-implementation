@@ -728,27 +728,22 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
 
             Node<T> nodeToMove = null;
 
-            if ((left != null && right != null ) &&
-                ((type == Type.MIN && node.value.compareTo(left.value) > 0 && node.value.compareTo(right.value) > 0)
-                || (type == Type.MAX && node.value.compareTo(left.value) < 0 && node.value.compareTo(right.value) < 0))
-             ) {
+            if (compare(node, right) && compare(node, left)) {
                 // Both children are greater/lesser than node
-                if ((type == Type.MIN && right.value.compareTo(left.value) < 0) || (type == Type.MAX && right.value.compareTo(left.value) > 0)) {
+                if (compare(left, right)) {
                     // Right is greater/lesser than left
                     nodeToMove = right;
-                } else if ((type == Type.MIN && left.value.compareTo(right.value) < 0) || (type == Type.MAX && left.value.compareTo(right.value) > 0)) {
+                } else if (compare(right, left)) {
                     // Left is greater/lesser than right
                     nodeToMove = left;
                 } else {
                     // Both children are equal, use right
                     nodeToMove = right;
                 }
-            } else if ((type == Type.MIN && right != null && node.value.compareTo(right.value) > 0)
-                       || (type == Type.MAX && right != null && node.value.compareTo(right.value) < 0)) {
+            } else if (compare(node, right)) {
                 // Right is greater than node
                 nodeToMove = right;
-            } else if ((type == Type.MIN && left != null && node.value.compareTo(left.value) > 0)
-                       || (type == Type.MAX && left != null && node.value.compareTo(left.value) < 0)) {
+            } else if (compare(node, left)) {
                 // Left is greater than node
                 nodeToMove = left;
             }
@@ -779,24 +774,35 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             Node<T> nodeToMoveRight = nodeToMove.right;
             if (nodeLeft!=null && nodeLeft.equals(nodeToMove)) {
                 nodeToMove.right = nodeRight;
-                if (nodeRight != null) nodeRight.parent = nodeToMove;
-
+                changeParent(nodeRight, nodeToMove);
+                
                 nodeToMove.left = heapNode;
             } else {
                 nodeToMove.left = nodeLeft;
-                if (nodeLeft != null) nodeLeft.parent = nodeToMove;
-
+                changeParent(nodeLeft, nodeToMove);
+                
                 nodeToMove.right = heapNode;
             }
             heapNode.parent = nodeToMove;
 
             heapNode.left = nodeToMoveLeft;
-            if (nodeToMoveLeft != null) nodeToMoveLeft.parent = heapNode;
-
+            changeParent(nodeToMoveLeft, heapNode);
+            
             heapNode.right = nodeToMoveRight;
-            if (nodeToMoveRight != null) nodeToMoveRight.parent = heapNode;
+            changeParent(nodeToMoveRight, heapNode);
 
             heapDown(node);
+        }
+    
+        private void changeParent(Node<T> node, Node<T> parent) {
+        	if (node != null) node.parent = parent;
+        }
+        
+        private boolean compare(Node<T> node, Node<T> checkNode) {
+            if (checkNode != null && ((type == Type.MIN && node.value.compareTo(checkNode.value) > 0)
+            || (type == Type.MAX && node.value.compareTo(checkNode.value) < 0)))
+                return true;
+            return false;
         }
 
         /**
@@ -820,25 +826,20 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             Node<T> right = node.right;
 
             // We shouldn't ever have a right node without a left in a heap
-            if (right != null && left == null)
-                return false;
+            if (right != null && left == null) return false;
 
-            if (left != null) {
-                if ((type == Type.MIN && node.value.compareTo(left.value) < 0)
-                        || (type == Type.MAX && node.value.compareTo(left.value) > 0)) {
-                    return validateNode(left);
-                }
-                return false;
+            return check(node, left)&&check(node, right);
+        }
+        
+        public boolean check(Node<T> node, Node<T> checkNode) {
+        	if (checkNode != null) {
+                if ((type == Type.MIN && node.value.compareTo(checkNode.value) < 0)
+                        || (type == Type.MAX && node.value.compareTo(checkNode.value) > 0)) {
+                	if(!validateNode(checkNode))
+                		return false;
+                } else return false;
             }
-            if (right != null) {
-                if ((type == Type.MIN && node.value.compareTo(right.value) < 0)
-                        || (type == Type.MAX && node.value.compareTo(right.value) > 0)) {
-                    return validateNode(right);
-                }
-                return false;
-            }
-
-            return true;
+        	return true;
         }
 
         /**
