@@ -1006,4 +1006,34 @@ public class Graphs {
         final Graph<Integer> g = new Graph<Integer>(TYPE.DIRECTED, vertices, edges);
         return g;
     }
+
+    /**
+     * Test Dijkstra.getShortestPath function when start == null
+     * The test will fail if NullPointerException isn't thrown when the test is run
+     * and will pass if it's thrown.
+     */
+    @Test(expected = NullPointerException.class)
+    public void testDijkstraNullPointerException1() {
+        final UndirectedGraph undirected = new UndirectedGraph();
+        final Graph.Vertex<Integer> start = null;
+
+        // When start == null
+        final Map<Graph.Vertex<Integer>, Graph.CostPathPair<Integer>> map1 = Dijkstra.getShortestPaths(undirected.graph, start);
+    }
+
+    /**
+     * Test Dijkstra.getShortestPath function when graph == null
+     * The test will fail if NullPointerException isn't thrown when the test is run
+     * and will pass if it's thrown.
+     */
+    @Test(expected = NullPointerException.class)
+    public void testDijkstraNullPointerException2() {
+        final UndirectedGraph undirected = new UndirectedGraph();
+        final Graph.Vertex<Integer> start = undirected.v1;
+
+        // When graph == null
+        final Graph<Integer> graph = null;
+        final Map<Graph.Vertex<Integer>, Graph.CostPathPair<Integer>> map2 = Dijkstra.getShortestPaths(graph, start);
+    }
+
 }

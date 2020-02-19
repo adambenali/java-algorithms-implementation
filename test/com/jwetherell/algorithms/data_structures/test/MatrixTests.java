@@ -4,9 +4,11 @@ import org.junit.Test;
 
 import com.jwetherell.algorithms.data_structures.Matrix;
 
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import static org.junit.Assert.*;
+
 
 public class MatrixTests {
 
@@ -187,6 +189,105 @@ public class MatrixTests {
     }
 
     /**
+     * Testing the compare function in Matrix.java
+     * by testing BigDecimal numeric type for the matrices.
+     * This test should return true.
+     */
+    @Test
+    public void testBigDecimalCompare() {
+        // Testing BigDecimal branch
+        Matrix<BigDecimal> matrix1 = new Matrix<BigDecimal>(2, 2);
+        matrix1.set(0, 0, new BigDecimal("4.0"));
+        matrix1.set(0, 1, new BigDecimal("9.0"));
+        matrix1.set(1, 0, new BigDecimal("3.0"));
+        matrix1.set(1, 1, new BigDecimal("2.0"));
+
+        Matrix<BigDecimal> matrix2 = new Matrix<BigDecimal>(2, 2);
+        matrix2.set(0, 0, new BigDecimal("4.0"));
+        matrix2.set(0, 1, new BigDecimal("9.0"));
+        matrix2.set(1, 0, new BigDecimal("3.0"));
+        matrix2.set(1, 1, new BigDecimal("2.0"));
+
+        assertTrue(matrix1.equals(matrix2));
+        
+    }
+
+    /**
+     * Testing the compare function in Matrix.java
+     * by testing BigInterger numeric type for the matrices.
+     * This test should return true.
+     */
+    @Test
+    public void testBigIntegerCompare() {
+        // Testing BigInteger branch
+        Matrix<BigInteger> matrix3 = new Matrix<BigInteger>(2, 2);
+        matrix3.set(0, 0, new BigInteger("4"));
+        matrix3.set(0, 1, new BigInteger("9"));
+        matrix3.set(1, 0, new BigInteger("3"));
+        matrix3.set(1, 1, new BigInteger("2"));
+
+        Matrix<BigInteger> matrix4 = new Matrix<BigInteger>(2, 2);
+        matrix4.set(0, 0, new BigInteger("4"));
+        matrix4.set(0, 1, new BigInteger("9"));
+        matrix4.set(1, 0, new BigInteger("3"));
+        matrix4.set(1, 1, new BigInteger("2"));
+
+        assertTrue(matrix3.equals(matrix4));
+
+    }
+
+    /**
+     * Testing the compare function in Matrix.java
+     * by testing Long,Double and float numeric type for the matrices.
+     */
+    @Test
+    public void testNumericTypesCompare2() {
+        // Testing Long branch, the second condition in the if statement.
+        Matrix<Integer> matrix5 = new Matrix<Integer>(2, 2);
+        matrix5.set(0, 0, 4);
+        matrix5.set(0, 1, 9);
+        matrix5.set(1, 0, 3);
+        matrix5.set(1, 1, 2);
+
+        Matrix<Long> matrix6 = new Matrix<Long>(2, 2);
+        matrix6.set(0, 0, 4L);
+        matrix6.set(0, 1, 9L);
+        matrix6.set(1, 0, 3L);
+        matrix6.set(1, 1, 2L);
+
+        assertTrue(matrix5.equals(matrix6));
+
+        // Testing Double branch
+        Matrix<Double> matrix7 = new Matrix<Double>(2, 2);
+        matrix7.set(0, 0, 4.0d);
+        matrix7.set(0, 1, 9.0d);
+        matrix7.set(1, 0, 3.0d);
+        matrix7.set(1, 1, 2.0d);
+
+        Matrix<Double> matrix8 = new Matrix<Double>(2, 2);
+        matrix8.set(0, 0, 4.0d);
+        matrix8.set(0, 1, 9.0d);
+        matrix8.set(1, 0, 3.0d);
+        matrix8.set(1, 1, 2.0d);
+
+        assertTrue(matrix7.equals(matrix8));
+
+        // Testing Float branch with two different matrices. Should return false.
+        Matrix<Float> matrix9 = new Matrix<Float>(2, 2);
+        matrix9.set(0, 0, 4.0f);
+        matrix9.set(0, 1, 9.0f);
+        matrix9.set(1, 0, 3.0f);
+        matrix9.set(1, 1, 2.0f);
+
+        Matrix<Float> matrix10 = new Matrix<Float>(2, 2);
+        matrix10.set(0, 0, 1.0f);
+        matrix10.set(0, 1, 2.0f);
+        matrix10.set(1, 0, 5.0f);
+        matrix10.set(1, 1, 6.0f);
+
+        assertFalse(matrix9.equals(matrix10));
+    }
+
      * Test equals() method of Matrix class.
      * Test formal properties like shape and content.
      */
@@ -248,4 +349,5 @@ public class MatrixTests {
         assertFalse(matrix1.equals(matrix2));
 
     }
+
 }
