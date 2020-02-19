@@ -288,6 +288,7 @@ public class MatrixTests {
         assertFalse(matrix9.equals(matrix10));
     }
 
+    /**
      * Test equals() method of Matrix class.
      * Test formal properties like shape and content.
      */
