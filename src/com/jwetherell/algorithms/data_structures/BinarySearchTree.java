@@ -10,6 +10,8 @@ import java.util.Random;
 import java.util.Queue;
 import java.util.Set;
 
+import com.jwetherell.algorithms.InstrumentationCounter;
+
 import com.jwetherell.algorithms.data_structures.interfaces.ITree;
 
 /**
@@ -534,59 +536,82 @@ public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
             Node<T> greater = (node.greater != null && !added.contains(node.greater)) ? node.greater : null;
 
             if (parent == null && lesser == null && greater == null) {
-                if (!added.contains(node))
+                if (!added.contains(node)) {
                     nodes[index++] = node.id;
+                    InstrumentationCounter.pointHits[300]++;
+                }
+                InstrumentationCounter.pointHits[301]++;
                 break;
             }
 
             if (order == DepthFirstSearchOrder.inOrder) {
                 if (lesser != null) {
                     node = lesser;
+                    InstrumentationCounter.pointHits[302]++;
                 } else {
                     if (!added.contains(node)) {
                         nodes[index++] = node.id;
                         added.add(node);
+                        InstrumentationCounter.pointHits[303]++;
                     }
                     if (greater != null) {
                         node = greater;
+                        InstrumentationCounter.pointHits[304]++;
                     } else if (added.contains(node)) {
                         node = parent;
+                        InstrumentationCounter.pointHits[305]++;
                     } else {
                         // We should not get here. Stop the loop!
                         node = null;
+                        InstrumentationCounter.pointHits[306]++;
                     }
+                    InstrumentationCounter.pointHits[307]++;
                 }
+                InstrumentationCounter.pointHits[308]++;
             } else if (order == DepthFirstSearchOrder.preOrder) {
                 if (!added.contains(node)) {
                     nodes[index++] = node.id;
                     added.add(node);
+                    InstrumentationCounter.pointHits[309]++;
                 }
                 if (lesser != null) {
                     node = lesser;
+                    InstrumentationCounter.pointHits[310]++;
                 } else if (greater != null) {
                     node = greater;
+                    InstrumentationCounter.pointHits[311]++;
                 } else if (added.contains(node)) {
                     node = parent;
+                    InstrumentationCounter.pointHits[312]++;
                 } else {
                     // We should not get here. Stop the loop!
                     node = null;
+                    InstrumentationCounter.pointHits[313]++;
                 }
+                InstrumentationCounter.pointHits[314]++;
             } else {
                 // post-Order
                 if (lesser != null) {
                     node = lesser;
+                    InstrumentationCounter.pointHits[315]++;
                 } else {
                     if (greater != null) {
                         node = greater;
+                        InstrumentationCounter.pointHits[316]++;
                     } else {
                         // lesser==null && greater==null
                         nodes[index++] = node.id;
                         added.add(node);
                         node = parent;
+                        InstrumentationCounter.pointHits[317]++;
                     }
+                    InstrumentationCounter.pointHits[318]++;
                 }
+                InstrumentationCounter.pointHits[319]++;
             }
+            InstrumentationCounter.pointHits[320]++;
         }
+        InstrumentationCounter.pointHits[321]++;
         return nodes;
     }
 

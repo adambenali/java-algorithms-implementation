@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import com.jwetherell.algorithms.InstrumentationCounter;
 import com.jwetherell.algorithms.data_structures.interfaces.ISuffixTree;
 
 /**
@@ -512,29 +513,37 @@ public class SuffixTree<C extends CharSequence> implements ISuffixTree<C> {
             StringBuilder builder = new StringBuilder();
             int value = 0;
             if (e != null) {
+                InstrumentationCounter.pointHits[900]++;
                 value = e.endNode;
                 String string = tree.string.substring(e.firstCharIndex, e.lastCharIndex + 1);
                 int index = string.indexOf(tree.endSeqChar);
-                if (index >= 0)
+                if (index >= 0) {
+                    InstrumentationCounter.pointHits[901]++;
                     string = string.substring(0, index + 1);
+                }
                 builder.append(prefix + (isTail ? "└── " : "├── ") + "(" + value + ") " + string + "\n");
             } else {
+                InstrumentationCounter.pointHits[902]++;
                 builder.append(prefix + (isTail ? "└── " : "├── ") + "(" + 0 + ")" + "\n");
             }
 
             if (tree.edgeMap.size() > 0) {
+                InstrumentationCounter.pointHits[903]++;
                 List<Edge<C>> children = new LinkedList<Edge<C>>();
                 for (Edge<C> edge : tree.edgeMap.values()) {
                     if (edge != null && (edge.startNode == value)) {
+                        InstrumentationCounter.pointHits[904]++;
                         children.add(edge);
                     }
                 }
                 if (children.size() > 0) {
+                    InstrumentationCounter.pointHits[905]++;
                     for (int i = 0; i < children.size() - 1; i++) {
                         Edge<C> edge = children.get(i);
                         builder.append(getString(tree, edge, prefix + (isTail ? "    " : "│   "), false));
                     }
                     if (children.size() >= 1) {
+                        InstrumentationCounter.pointHits[906]++;
                         Edge<C> edge = children.get(children.size() - 1);
                         builder.append(getString(tree, edge, prefix + (isTail ? "    " : "│   "), true));
                     }

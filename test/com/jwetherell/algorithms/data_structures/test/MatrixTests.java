@@ -4,9 +4,84 @@ import org.junit.Test;
 
 import com.jwetherell.algorithms.data_structures.Matrix;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import static org.junit.Assert.*;
 
 public class MatrixTests {
+
+    /**
+     * Trying to add two matrices of different
+     * dimensions should return an empty (null-filled)
+     * matrix with dimensions equal to the matrix whose
+     * add method was called.
+     */
+    @Test
+    public void testAddBadDimensions() {
+        Matrix<Double> m1 = new Matrix<>(2, 1);
+        Matrix<Double> m2 = new Matrix<>(1, 2);
+        m1.set(0,0, 1.0);
+        m1.set(1,0, 1.0);
+        m2.set(0,0, 1.0);
+        m2.set(0,1, 1.0);
+
+        Matrix<Double> res = m1.add(m2);
+        assertEquals(res.getCols(), m1.getCols());
+        assertEquals(res.getRows(), m1.getRows());
+        assertNull(res.get(0, 0));
+        assertNull(res.get(1, 0));
+    }
+
+    /**
+     * Test matrix addition of BigInteger objects
+     */
+    @Test
+    public void testAddBigInteger() {
+        Matrix<BigInteger> m1 = new Matrix<>(2, 1);
+        Matrix<BigInteger> m2 = new Matrix<>(2, 1);
+        m1.set(0,0, BigInteger.valueOf(8));
+        m2.set(0,0, BigInteger.valueOf(2));
+        m1.set(1,0, BigInteger.valueOf(4));
+        m2.set(1,0, BigInteger.valueOf(3));
+
+        Matrix<BigInteger> res = m1.add(m2);
+        assertEquals(BigInteger.valueOf(10), res.get(0,0));
+        assertEquals(BigInteger.valueOf(7), res.get(1,0));
+    }
+
+    /**
+     * Test matrix addition of BigDecimal objects
+     */
+    @Test
+    public void testAddBigDecimal() {
+        Matrix<BigDecimal> m1 = new Matrix<>(2, 1);
+        Matrix<BigDecimal> m2 = new Matrix<>(2, 1);
+        m1.set(0,0, BigDecimal.valueOf(8.2));
+        m2.set(0,0, BigDecimal.valueOf(2.3));
+        m1.set(1,0, BigDecimal.valueOf(4.8));
+        m2.set(1,0, BigDecimal.valueOf(3.1));
+
+        Matrix<BigDecimal> res = m1.add(m2);
+        assertEquals(BigDecimal.valueOf(10.5), res.get(0,0));
+        assertEquals(BigDecimal.valueOf(7.9), res.get(1,0));
+    }
+
+    /**
+     * Test matrix addition of Long objects
+     */
+    @Test
+    public void testAddLong() {
+        Matrix<Long> m1 = new Matrix<>(2, 1);
+        Matrix<Long> m2 = new Matrix<>(2, 1);
+        m1.set(0,0, 8L);
+        m2.set(0,0, 2L);
+        m1.set(1,0, 4L);
+        m2.set(1,0, 3L);
+
+        Matrix<Long> res = m1.add(m2);
+        assertEquals(10L, res.get(0,0));
+        assertEquals(7L, res.get(1,0));
+    }
 
     @Test
     public void testMatrix() {
