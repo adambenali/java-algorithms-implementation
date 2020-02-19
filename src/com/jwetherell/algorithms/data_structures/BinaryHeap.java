@@ -300,24 +300,19 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             // We shouldn't ever have a right node without a left in a heap
             if (rightIndex != Integer.MIN_VALUE && leftIndex == Integer.MIN_VALUE) return false;
 
-            if (leftIndex != Integer.MIN_VALUE && leftIndex < size) {
-                T left = this.array[leftIndex];
-                if ((type == Type.MIN && value.compareTo(left) < 0) 
-                    || (type == Type.MAX && value.compareTo(left) > 0)) {
-                    return validateNode(leftIndex);
-                }
-                return false;
+            return check(value, leftIndex)&&check(value, rightIndex);
+        }
+        
+        public boolean check(T value, int index) {
+        	if (index != Integer.MIN_VALUE && index < size) {
+        		T checkValue = this.array[index];
+                if ((type == Type.MIN && value.compareTo(checkValue) < 0) 
+                    || (type == Type.MAX && value.compareTo(checkValue) > 0)) {
+                    if(!validateNode(index))
+                        return false;
+                    } else return false;
             }
-            if (rightIndex != Integer.MIN_VALUE && rightIndex < size) {
-                T right = this.array[rightIndex];
-                if ((type == Type.MIN && value.compareTo(right) < 0)
-                    || (type == Type.MAX && value.compareTo(right) > 0)) {
-                    return validateNode(rightIndex);
-                }
-                return false;
-            }
-
-            return true;
+        	return true;
         }
 
         /**
